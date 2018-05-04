@@ -1,2 +1,3 @@
 # advanced-react
-Repo for Strongbytes' Advanced React training
+
+Repo for [Strongbytes](https://strongbytes.ro)'s Advanced React training.
