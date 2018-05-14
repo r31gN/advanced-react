@@ -42,9 +42,9 @@ export const addPuppy = puppy => async dispatch => {
   }
 };
 
-export const deletePuppySuccess = puppy => ({
+export const deletePuppySuccess = puppyId => ({
   type: types.DELETE_PUPPY_SUCCESS,
-  puppy
+  puppyId
 });
 
 export const deletePuppy = puppyId => async dispatch => {

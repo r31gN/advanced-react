@@ -3,6 +3,44 @@ import * as actions from './Puppy.actions';
 import * as types from './Puppy.types';
 import reducer from './Puppy.reducer';
 
+describe('Puppy sync actions', () => {
+  it('Should create an action to treat generic error', () => {
+    const err = new Error('Some generic error.');
+    const expectedAction = {
+      type: types.GENERIC_ACTION_ERROR,
+      err
+    };
+    expect(actions.genericActionError(err)).toEqual(expectedAction);
+  });
+
+  it('Should create an action to get puppies successfully', () => {
+    const puppies = [];
+    const expectedAction = {
+      type: types.GET_PUPPIES_SUCCESS,
+      puppies
+    };
+    expect(actions.getPuppiesSuccess(puppies)).toEqual(expectedAction);
+  });
+
+  it('Should create an action to add a puppy successfully', () => {
+    const puppy = {};
+    const expectedAction = { type: types.ADD_PUPPY_SUCCESS, puppy };
+    expect(actions.addPuppySuccess(puppy)).toEqual(expectedAction);
+  });
+
+  it('Should create an action to delete a puppy successfully', () => {
+    const puppyId = 0;
+    const expectedAction = { type: types.DELETE_PUPPY_SUCCESS, puppyId };
+    expect(actions.deletePuppySuccess(puppyId)).toEqual(expectedAction);
+  });
+
+  it('Should create an action to adopt a puppy successfully', () => {
+    const puppy = { adopted: true };
+    const expectedAction = { type: types.ADOPT_PUPPY_SUCCESS, puppy };
+    expect(actions.adoptPuppySuccess(puppy)).toEqual(expectedAction);
+  });
+});
+
 describe('Reducers tests', () => {
   it('Should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
