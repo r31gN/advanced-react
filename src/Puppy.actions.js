@@ -27,8 +27,7 @@ export const addPuppySuccess = puppy => ({
 
 export const addPuppy = puppy => async dispatch => {
   try {
-    await (`/puppies`,
-    {
+    await fetch(`/puppies`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
