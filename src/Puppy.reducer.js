@@ -27,11 +27,10 @@ const puppy = (state = initialState, action) => {
       });
 
     case types.DELETE_PUPPY_SUCCESS:
-      const puppy = { action };
-      const index = state.puppies.findIndex(puppy);
+      const puppyId = { action };
       const puppies = [
-        ...state.puppies.slice(0, index),
-        ...state.puppies.slice(index + 1)
+        ...state.puppies.slice(0, puppyId),
+        ...state.puppies.slice(puppyId + 1)
       ];
       const filteredPuppies = determineFilteredPuppies(puppies, state.filter);
       return Object.assign({}, state, {
