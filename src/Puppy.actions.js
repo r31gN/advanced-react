@@ -14,9 +14,9 @@ export const getPuppies = () => async dispatch => {
   try {
     const res = await fetch(`/puppies`);
     const puppies = await res.json();
-    return dispatch(getPuppiesSuccess(puppies));
+    dispatch(getPuppiesSuccess(puppies));
   } catch (err) {
-    return dispatch(genericActionError(err));
+    dispatch(genericActionError(err));
   }
 };
 
@@ -41,7 +41,7 @@ export const addPuppy = puppy => async dispatch => {
     const puppies = await res.json();
     dispatch(getPuppiesSuccess(puppies));
   } catch (err) {
-    genericActionError(err);
+    dispatch(genericActionError(err));
   }
 };
 
@@ -58,7 +58,7 @@ export const deletePuppy = puppyId => async dispatch => {
     const puppies = await res.json();
     dispatch(getPuppiesSuccess(puppies));
   } catch (err) {
-    genericActionError(err);
+    dispatch(genericActionError(err));
   }
 };
 
@@ -77,12 +77,12 @@ export const adoptPuppy = (puppyId, puppy) => async dispatch => {
       },
       body: JSON.stringify(puppy)
     });
-    dispatch(adoptPuppySuccess(puppy));
+    dispatch(adoptPuppySuccess(puppyId));
     const res = await fetch(`/puppies`);
     const puppies = await res.json();
     dispatch(getPuppiesSuccess(puppies));
   } catch (err) {
-    genericActionError(err);
+    dispatch(genericActionError(err));
   }
 };
 

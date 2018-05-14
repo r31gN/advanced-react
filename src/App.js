@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Filters from './Filters';
 import PuppyAddForm from './PuppyAddForm';
 import PuppiesList from './PuppiesList';
-import { determineFilteredPuppies } from './Utils';
 import * as actions from './Puppy.actions';
 import { connect } from 'react-redux';
 import './App.css';
@@ -20,15 +19,7 @@ class App extends Component {
 
   _onChangeFilterHandler = e => {
     const newFilter = e.target.value;
-    let filteredPuppies = determineFilteredPuppies(
-      this.state.puppies,
-      newFilter
-    );
-
-    this.setState(() => ({
-      filteredPuppies,
-      currentFilter: newFilter
-    }));
+    this.props._fitlerPuppies(newFilter);
   };
 
   _onClickAddHandler = () =>
@@ -37,62 +28,18 @@ class App extends Component {
       isInAddMode: !prevState.isInAddMode
     }));
 
-  _onClickSaveHandler = puppy => {
-    fetch(`/puppies`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(puppy)
-    })
-      .then(() => fetch(`/puppies`))
-      .then(res => res.json())
-      .then(res =>
-        this.setState(() => ({
-          puppies: res.slice(0),
-          filteredPuppies: res.slice(0),
-          isInAddMode: false
-        }))
-      );
-  };
+  _onClickSaveHandler = puppy => this.props._addPuppy(puppy);
 
   _onClickAdoptHandler = puppyId => {
-    const puppy = this.state.puppies.find(puppy => puppy.id === puppyId);
+    const { globalState } = this.props;
+    const { puppies } = globalState;
+    const puppy = puppies.find(puppy => puppy.id === puppyId);
     puppy.adopted = !puppy.adopted;
-
-    fetch(`/puppies/${puppyId}`, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(puppy)
-    })
-      .then(() => fetch(`/puppies`))
-      .then(res => res.json())
-      .then(res =>
-        this.setState(() => ({
-          puppies: res.slice(0),
-          filteredPuppies: determineFilteredPuppies(
-            res.slice(0),
-            this.state.currentFilter
-          )
-        }))
-      );
+    console.log(puppy);
+    this.props._adoptPuppy(puppyId, puppy);
   };
 
-  _onClickDeleteHandler = puppyId => {
-    fetch(`/puppies/${puppyId}`, { method: 'DELETE' })
-      .then(() => fetch(`/puppies`))
-      .then(res => res.json())
-      .then(res =>
-        this.setState(() => ({
-          puppies: res.slice(0),
-          filteredPuppies: res.slice(0)
-        }))
-      );
-  };
+  _onClickDeleteHandler = puppyId => this.props._deletePuppy(puppyId);
 
   render() {
     const { globalState } = this.props;
@@ -138,7 +85,11 @@ class App extends Component {
 const mapStateToProps = state => state;
 
 const mapDispatchToProps = (dispatch, props) => ({
-  _getPuppies: () => dispatch(actions.getPuppies())
+  _getPuppies: () => dispatch(actions.getPuppies()),
+  _addPuppy: puppy => dispatch(actions.addPuppy(puppy)),
+  _deletePuppy: puppyId => dispatch(actions.deletePuppy(puppyId)),
+  _adoptPuppy: (puppyId, puppy) => dispatch(actions.adoptPuppy(puppyId, puppy)),
+  _fitlerPuppies: newFilter => dispatch(actions.filterPuppies(newFilter))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
