@@ -23,6 +23,11 @@ export const adoptPuppySuccess = puppy => ({
   puppy
 });
 
+export const filterPuppies = filter => ({
+  type: types.FILTER_PUPPIES,
+  filter
+});
+
 export const genericActionError = err => ({
   type: types.GENERIC_ACTION_ERROR,
   err
