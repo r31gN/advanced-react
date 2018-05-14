@@ -14,12 +14,12 @@ let puppies, filteredPuppies, puppy;
 const puppyReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.GET_PUPPIES_SUCCESS:
-      puppies = { action };
+      puppies = action.puppies;
       filteredPuppies = determineFilteredPuppies(puppies, state.filter);
       return Object.assign({}, state, { puppies, filteredPuppies, err: null });
 
     case types.ADD_PUPPY_SUCCESS:
-      puppy = { action };
+      puppy = action;
       puppies = [...state.puppies, puppy];
       filteredPuppies = determineFilteredPuppies(puppies, state.filter);
       return Object.assign({}, state, {
@@ -29,7 +29,7 @@ const puppyReducer = (state = initialState, action) => {
       });
 
     case types.DELETE_PUPPY_SUCCESS:
-      const puppyId = { action };
+      const puppyId = action.puppyId;
       puppies = [
         ...state.puppies.slice(0, puppyId),
         ...state.puppies.slice(puppyId + 1)
@@ -42,7 +42,7 @@ const puppyReducer = (state = initialState, action) => {
       });
 
     case types.ADOPT_PUPPY_SUCCESS:
-      puppy = { action };
+      puppy = action.puppy;
       const index = state.puppies.findIndex(puppy);
       puppies = [
         ...state.puppies.slice(0, index),
@@ -57,7 +57,7 @@ const puppyReducer = (state = initialState, action) => {
       });
 
     case types.FILTER_PUPPIES:
-      const filter = { action };
+      const filter = action.filter;
       filteredPuppies = determineFilteredPuppies(state.puppies, filter);
       return Object.assign({}, state, {
         filteredPuppies,
@@ -66,7 +66,7 @@ const puppyReducer = (state = initialState, action) => {
       });
 
     case types.GENERIC_ACTION_ERROR:
-      const err = { action };
+      const err = action.err;
       return Object.assign({}, state, {
         puppies: [],
         filteredPuppies: [],

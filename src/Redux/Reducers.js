@@ -1,4 +1,4 @@
 import { combineReducers } from 'redux';
-import puppy from '../Puppy.reducer';
+import globalState from '../Puppy.reducer';
 
-export default combineReducers({ puppy });
+export default combineReducers({ globalState });

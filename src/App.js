@@ -3,6 +3,7 @@ import Filters from './Filters';
 import PuppyAddForm from './PuppyAddForm';
 import PuppiesList from './PuppiesList';
 import { determineFilteredPuppies } from './Utils';
+import * as actions from './Puppy.actions';
 import { connect } from 'react-redux';
 import './App.css';
 
@@ -11,22 +12,11 @@ class App extends Component {
     super();
 
     this.state = {
-      isInAddMode: false,
-      puppies: [],
-      filteredPuppies: [],
-      currentFilter: 'ALL'
+      isInAddMode: false
     };
   }
 
-  componentDidMount = () =>
-    fetch(`/puppies`)
-      .then(res => res.json())
-      .then(res =>
-        this.setState(() => ({
-          puppies: res.slice(0),
-          filteredPuppies: res.slice(0)
-        }))
-      );
+  componentDidMount = () => this.props._getPuppies();
 
   _onChangeFilterHandler = e => {
     const newFilter = e.target.value;
@@ -105,7 +95,12 @@ class App extends Component {
   };
 
   render() {
-    if (!this.state.puppies.length) {
+    const { globalState } = this.props;
+    const { puppies } = globalState;
+    const { filteredPuppies } = globalState;
+    const { filter } = globalState;
+
+    if (!puppies.length) {
       return null;
     }
 
@@ -116,7 +111,7 @@ class App extends Component {
         </header>
         <div className="u-fx u-fx-align-center u-fx-justify-center  u-mb-double">
           <Filters
-            currentFilter={this.state.currentFilter}
+            filter={filter}
             onChangeFilterHandler={this._onChangeFilterHandler}
           />
           <span className="u-mh-double">OR</span>
@@ -133,7 +128,7 @@ class App extends Component {
         <PuppiesList
           onClickAdoptHandler={this._onClickAdoptHandler}
           onClickDeleteHandler={this._onClickDeleteHandler}
-          puppies={this.state.filteredPuppies}
+          puppies={filteredPuppies}
         />
       </div>
     );
@@ -142,6 +137,8 @@ class App extends Component {
 
 const mapStateToProps = state => state;
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = (dispatch, props) => ({
+  _getPuppies: () => dispatch(actions.getPuppies())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

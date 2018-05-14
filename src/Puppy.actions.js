@@ -1,5 +1,4 @@
 import * as types from './Puppy.types';
-import store from 'Redux/Store';
 
 export const genericActionError = err => ({
   type: types.GENERIC_ACTION_ERROR,
@@ -11,13 +10,13 @@ export const getPuppiesSuccess = puppies => ({
   puppies
 });
 
-export const getPuppies = async () => dispatch => {
+export const getPuppies = () => async dispatch => {
   try {
     const res = await fetch(`/puppies`);
     const puppies = await res.json();
-    dispatch(getPuppiesSuccess(puppies));
+    return dispatch(getPuppiesSuccess(puppies));
   } catch (err) {
-    dispatch(genericActionError(err));
+    return dispatch(genericActionError(err));
   }
 };
 
@@ -26,9 +25,10 @@ export const addPuppySuccess = puppy => ({
   puppy
 });
 
-export const addPuppy = async (puppy) => dispatch => {
+export const addPuppy = puppy => async dispatch => {
   try {
-    await (`/puppies`, {
+    await (`/puppies`,
+    {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -36,7 +36,7 @@ export const addPuppy = async (puppy) => dispatch => {
       },
       body: JSON.stringify(puppy)
     });
-    dispatch(addPuppySuccess(puppies));
+    dispatch(addPuppySuccess(puppy));
     const res = await fetch(`/puppies`);
     const puppies = await res.json();
     dispatch(getPuppiesSuccess(puppies));
@@ -50,9 +50,9 @@ export const deletePuppySuccess = puppy => ({
   puppy
 });
 
-export const deletePuppy = async (puppyId) => dispatch => {
+export const deletePuppy = puppyId => async dispatch => {
   try {
-    await fetch(`/puppies/${puppyId}`, { method: 'DELETE' })
+    await fetch(`/puppies/${puppyId}`, { method: 'DELETE' });
     dispatch(deletePuppySuccess(puppyId));
     const res = await fetch(`/puppies`);
     const puppies = await res.json();
@@ -67,7 +67,7 @@ export const adoptPuppySuccess = puppy => ({
   puppy
 });
 
-export const adoptPuppy = async (puppyId, puppy) => dispatch => {
+export const adoptPuppy = (puppyId, puppy) => async dispatch => {
   try {
     await fetch(`/puppies/${puppyId}`, {
       method: 'PUT',
@@ -76,7 +76,7 @@ export const adoptPuppy = async (puppyId, puppy) => dispatch => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(puppy)
-    })
+    });
     dispatch(adoptPuppySuccess(puppy));
     const res = await fetch(`/puppies`);
     const puppies = await res.json();
