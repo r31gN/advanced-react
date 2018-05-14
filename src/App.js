@@ -3,6 +3,7 @@ import Filters from './Filters';
 import PuppyAddForm from './PuppyAddForm';
 import PuppiesList from './PuppiesList';
 import { determineFilteredPuppies } from './Utils';
+import { connect } from 'react-redux';
 import './App.css';
 
 class App extends Component {
@@ -139,4 +140,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => state;
+
+const mapDispatchToProps = () => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

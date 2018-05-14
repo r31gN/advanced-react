@@ -9,17 +9,19 @@ const initialState = {
   err: null
 };
 
-const puppy = (state = initialState, action) => {
+let puppies, filteredPuppies, puppy;
+
+const puppyReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.GET_PUPPIES_SUCCESS:
-      const puppies = { action };
-      const filteresPuppies = determineFilteredPuppies(puppies, state.filter);
+      puppies = { action };
+      filteredPuppies = determineFilteredPuppies(puppies, state.filter);
       return Object.assign({}, state, { puppies, filteredPuppies, err: null });
 
     case types.ADD_PUPPY_SUCCESS:
-      const puppy = { action };
-      const puppies = [...state.puppies, puppy];
-      const filteredPuppies = determineFilteredPuppies(puppies, state.filter);
+      puppy = { action };
+      puppies = [...state.puppies, puppy];
+      filteredPuppies = determineFilteredPuppies(puppies, state.filter);
       return Object.assign({}, state, {
         puppies,
         filteredPuppies,
@@ -28,11 +30,11 @@ const puppy = (state = initialState, action) => {
 
     case types.DELETE_PUPPY_SUCCESS:
       const puppyId = { action };
-      const puppies = [
+      puppies = [
         ...state.puppies.slice(0, puppyId),
         ...state.puppies.slice(puppyId + 1)
       ];
-      const filteredPuppies = determineFilteredPuppies(puppies, state.filter);
+      filteredPuppies = determineFilteredPuppies(puppies, state.filter);
       return Object.assign({}, state, {
         puppies,
         filteredPuppies,
@@ -40,14 +42,14 @@ const puppy = (state = initialState, action) => {
       });
 
     case types.ADOPT_PUPPY_SUCCESS:
-      const puppy = { action };
+      puppy = { action };
       const index = state.puppies.findIndex(puppy);
-      const puppies = [
+      puppies = [
         ...state.puppies.slice(0, index),
         action.puppy,
         ...state.puppies.slice(index + 1)
       ];
-      const filteredPuppies = determineFilteredPuppies(puppies, state.filter);
+      filteredPuppies = determineFilteredPuppies(puppies, state.filter);
       return Object.assign({}, state, {
         puppies,
         filteredPuppies,
@@ -56,7 +58,7 @@ const puppy = (state = initialState, action) => {
 
     case types.FILTER_PUPPIES:
       const filter = { action };
-      const filteredPuppies = determineFilteredPuppies(state.puppies, filter);
+      filteredPuppies = determineFilteredPuppies(state.puppies, filter);
       return Object.assign({}, state, {
         filteredPuppies,
         filter,
@@ -76,4 +78,4 @@ const puppy = (state = initialState, action) => {
   }
 };
 
-export default puppy;
+export default puppyReducer;
