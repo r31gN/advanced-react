@@ -72,4 +72,23 @@ describe('Reducers tests', () => {
       })
     ).toEqual(expectedState);
   });
+
+  it('Should handle changing state when an error happens', () => {
+    const state = {
+      filter: constants.FILTER_ALL
+    };
+    const err = new Error('Some generic error.');
+    const expectedState = {
+      puppies: [],
+      filteredPuppies: [],
+      filter: constants.FILTER_ALL,
+      err
+    };
+    expect(
+      reducer(state, {
+        type: types.GENERIC_ACTION_ERROR,
+        err
+      })
+    ).toEqual(expectedState);
+  });
 });
