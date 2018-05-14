@@ -17,16 +17,6 @@ class PuppiesList extends PureComponent {
   );
 }
 
-// const PuppiesList = ({ puppies, onClickAdoptHandler, onClickDeleteHandler }) =>
-//   puppies.map(puppy => (
-//     <Puppy
-//       key={puppy.id}
-//       {...puppy}
-//       onClickAdoptHandler={onClickAdoptHandler}
-//       onClickDeleteHandler={onClickDeleteHandler}
-//     />
-//   ));
-
 PuppiesList.propTypes = {
   puppies: PropTypes.arrayOf(
     PropTypes.shape({

@@ -2,28 +2,8 @@ import React, { Component } from 'react';
 import Filters from './Filters';
 import PuppyAddForm from './PuppyAddForm';
 import PuppiesList from './PuppiesList';
+import { determineFilteredPuppies } from './Utils';
 import './App.css';
-
-const determineFIlteredPuppies = (puppiesArr, filter) => {
-  let filteredPuppies = [];
-
-  switch (filter) {
-    case 'ALL':
-      filteredPuppies = puppiesArr.slice(0);
-      break;
-    case 'ADOPTED':
-      filteredPuppies = puppiesArr.filter(puppy => puppy.adopted);
-      break;
-    case 'NOT_ADOPTED':
-      filteredPuppies = puppiesArr.filter(puppy => !puppy.adopted);
-      break;
-    default:
-      filteredPuppies = puppiesArr.slice(0);
-      break;
-  }
-
-  return filteredPuppies;
-};
 
 class App extends Component {
   constructor() {
@@ -49,7 +29,7 @@ class App extends Component {
 
   _onChangeFilterHandler = e => {
     const newFilter = e.target.value;
-    let filteredPuppies = determineFIlteredPuppies(
+    let filteredPuppies = determineFilteredPuppies(
       this.state.puppies,
       newFilter
     );
@@ -103,7 +83,7 @@ class App extends Component {
       .then(res =>
         this.setState(() => ({
           puppies: res.slice(0),
-          filteredPuppies: determineFIlteredPuppies(
+          filteredPuppies: determineFilteredPuppies(
             res.slice(0),
             this.state.currentFilter
           )
