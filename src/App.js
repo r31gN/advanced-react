@@ -35,7 +35,6 @@ class App extends Component {
     const { puppies } = globalState;
     const puppy = puppies.find(puppy => puppy.id === puppyId);
     puppy.adopted = !puppy.adopted;
-    console.log(puppy);
     this.props._adoptPuppy(puppyId, puppy);
   };
 
