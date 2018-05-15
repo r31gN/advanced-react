@@ -72,7 +72,7 @@ export const adoptPuppy = (puppyId, puppy) => async dispatch => {
       },
       body: JSON.stringify(puppy)
     });
-    dispatch(adoptPuppySuccess(puppyId));
+    dispatch(adoptPuppySuccess(puppy));
     dispatch(getPuppies());
   } catch (err) {
     dispatch(genericActionError(err));

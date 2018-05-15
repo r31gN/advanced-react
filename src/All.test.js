@@ -1,3 +1,6 @@
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
+import fetchMock from 'fetch-mock';
 import * as constants from './Constants';
 import * as actions from './Puppy.actions';
 import * as types from './Puppy.types';
@@ -38,6 +41,105 @@ describe('Puppy sync actions', () => {
     const puppy = { adopted: true };
     const expectedAction = { type: types.ADOPT_PUPPY_SUCCESS, puppy };
     expect(actions.adoptPuppySuccess(puppy)).toEqual(expectedAction);
+  });
+});
+
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+describe('Puppy async actions', () => {
+  afterEach(() => {
+    fetchMock.reset();
+    fetchMock.restore();
+  });
+
+  it('Creates getPuppiesSuccess when fetching puppies has been completed successfully', () => {
+    fetchMock.getOnce('/puppies', {
+      body: [],
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const expectedActions = [
+      {
+        type: types.GET_PUPPIES_SUCCESS,
+        puppies: []
+      }
+    ];
+    const store = mockStore({ puppies: [] });
+
+    return store
+      .dispatch(actions.getPuppies())
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+  });
+
+  it('Creates addPuppySuccess when adding a puppy has been completed successfully', () => {
+    fetchMock.postOnce('/puppies', {
+      body: {},
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    fetchMock.getOnce('/puppies', {
+      body: [],
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const expectedActions = [{ type: types.ADD_PUPPY_SUCCESS, puppy: {} }];
+    const store = mockStore({ puppies: [] });
+
+    return store
+      .dispatch(actions.addPuppy({}))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+  });
+
+  it('Creates deletePuppySuccess when deleting a puppy has been completed successfully', () => {
+    const puppyId = 1;
+
+    fetchMock.deleteOnce(`/puppies/${puppyId}`, {
+      body: {},
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    fetchMock.getOnce('/puppies', {
+      body: [],
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const expectedActions = [{ type: types.DELETE_PUPPY_SUCCESS, puppyId }];
+    const store = mockStore({ puppies: [] });
+
+    return store
+      .dispatch(actions.deletePuppy(puppyId))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+  });
+
+  it('Creates adoptpuppySuccess when adopting a puppy has been completed successfully', () => {
+    const puppyId = 1;
+    const puppy = {};
+
+    fetchMock.putOnce(`/puppies/${puppyId}`, {
+      body: {},
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    fetchMock.getOnce('/puppies', {
+      body: [],
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const expectedActions = [{ type: types.ADOPT_PUPPY_SUCCESS, puppy }];
+    const store = mockStore({ puppies: [] });
+
+    return store
+      .dispatch(actions.adoptPuppy(puppyId, puppy))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
   });
 });
 
