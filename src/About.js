@@ -6,7 +6,12 @@ class About extends PureComponent {
       style={{ height: '100vh' }}
       className="page-not-found u-fx u-fx-align-center u-fx-justify-center"
     >
-      <p>This app was made with ❤️</p>
+      <p>
+        This app was made with{' '}
+        <span role="img" aria-label="Love">
+          ❤️
+        </span>
+      </p>
     </div>
   );
 }
