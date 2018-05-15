@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Filters from './Filters';
 import PuppyAddForm from './PuppyAddForm';
 import PuppiesList from './PuppiesList';
@@ -55,7 +56,7 @@ class App extends Component {
         <header className="puppies-app__header u-fx u-fx-align-center u-fx-justify-center u-mb-double">
           <h2>Puppy Adoption FTW</h2>
         </header>
-        <div className="u-fx u-fx-align-center u-fx-justify-center  u-mb-double">
+        <div className="u-fx u-fx-align-center u-fx-justify-center u-mb-double">
           <Filters
             filter={filter}
             onChangeFilterHandler={this._onChangeFilterHandler}
@@ -76,6 +77,9 @@ class App extends Component {
           onClickDeleteHandler={this._onClickDeleteHandler}
           puppies={filteredPuppies}
         />
+        <footer className="puppies-app__footer u-fx u-fx-align-center u-fx-justify-center u-mt-double">
+          <Link to="/about">Read more about this app</Link>
+        </footer>
       </div>
     );
   }
