@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux';
-import globalState from '../Puppy.reducer';
+import puppies from '../Reducers/Puppies.reducer';
+import filter from '../Reducers/Filter.reducer';
+import generic from '../Reducers/Generic.reducer';
 
-export default combineReducers({ globalState });
+export default combineReducers({ puppies, filter, generic });

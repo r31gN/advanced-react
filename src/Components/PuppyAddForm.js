@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import * as actions from '../Actions/Puppies.actions';
+import { connect } from 'react-redux';
 
 class PuppyAddForm extends Component {
   constructor() {
@@ -18,11 +19,18 @@ class PuppyAddForm extends Component {
     this.setState(() => ({ [key]: value }));
   };
 
-  _onClickSaveHandler = () =>
-    this.props.onClickSaveHandler({
-      ...this.state,
+  _onClickSaveHandler = () => {
+    this.props._createPuppy({
+      name: this.state.name,
+      type: this.state.type,
       adopted: false
     });
+
+    this.setState(prevState => ({
+      name: '',
+      type: ''
+    }));
+  };
 
   render = () => (
     <div className="u-mb-double u-fx u-fx-justify-center">
@@ -34,6 +42,7 @@ class PuppyAddForm extends Component {
             className="puppy-add-form__input u-pa-half"
             type="text"
             onChange={this._onChangeInputHandler}
+            value={this.state.name}
           />
         </div>
         <div className="u-fx u-fx-align-center  u-mb-full">
@@ -43,6 +52,7 @@ class PuppyAddForm extends Component {
             className="puppy-add-form__input u-pa-half"
             type="text"
             onChange={this._onChangeInputHandler}
+            value={this.state.type}
           />
         </div>
         <button
@@ -56,8 +66,11 @@ class PuppyAddForm extends Component {
   );
 }
 
-PuppyAddForm.propTypes = {
-  onClickSaveHandler: PropTypes.func.isRequired
-};
+const mapDispatchToProps = (dispatch, props) => ({
+  _createPuppy: puppy => dispatch(actions.createPuppy(puppy))
+});
 
-export default PuppyAddForm;
+export default connect(
+  null,
+  mapDispatchToProps
+)(PuppyAddForm);
