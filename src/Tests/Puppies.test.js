@@ -59,19 +59,12 @@ describe('Puppies async actions', () => {
       headers: { 'Content-Type': 'application/json' }
     });
 
-    fetchMock.getOnce('/puppies', {
-      body: [],
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
     const expectedActions = [
       { type: types.CREATE_PUPPY_SUCCESS, payload: { puppy: {} } }
     ];
     const store = mockStore({ puppies: [] });
 
-    return store
+    store
       .dispatch(actions.createPuppy({}))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
   });
@@ -92,7 +85,7 @@ describe('Puppies async actions', () => {
     ];
     const store = mockStore({ puppies: [] });
 
-    return store
+    store
       .dispatch(actions.readPuppies())
       .then(() => expect(store.getActions()).toEqual(expectedActions));
   });
@@ -112,7 +105,7 @@ describe('Puppies async actions', () => {
     ];
     const store = mockStore({ puppies: [] });
 
-    return store
+    store
       .dispatch(actions.updatePuppy(puppy))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
   });
@@ -125,19 +118,12 @@ describe('Puppies async actions', () => {
       headers: { 'Content-Type': 'application/json' }
     });
 
-    fetchMock.getOnce('/puppies', {
-      body: [],
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
     const expectedActions = [
       { type: types.DELETE_PUPPY_SUCCESS, payload: { puppyId } }
     ];
     const store = mockStore({ puppies: [] });
 
-    return store
+    store
       .dispatch(actions.deletePuppy(puppyId))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
   });
