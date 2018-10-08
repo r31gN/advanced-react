@@ -4,14 +4,14 @@
   "private": true,
   "proxy": "http://localhost:4000",
   "dependencies": {
-    "prop-types": "^15.6.0",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
-    "react-router-dom": "^4.2.2",
-    "react-scripts": "^1.1.4",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.0.4",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -20,8 +20,14 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "fetch-mock": "^6.4.2",
-    "react-perf-devtool": "^3.0.6",
-    "redux-mock-store": "^1.5.1"
-  }
+    "fetch-mock": "^7.0.7",
+    "react-perf-devtool": "^3.1.8",
+    "redux-mock-store": "^1.5.3"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
