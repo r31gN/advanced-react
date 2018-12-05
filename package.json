@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "node-fetch": "^2.3.0",
     "prop-types": "^15.6.2",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
@@ -20,6 +19,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "node-fetch": "^2.3.0",
     "fetch-mock": "^7.2.5",
     "redux-mock-store": "^1.5.3"
   },
