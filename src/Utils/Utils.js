@@ -1,14 +1,16 @@
+import * as Constants from '../Constants/Constants';
+
 export const determineFilteredPuppies = (puppiesArr, filter) => {
   let filteredPuppies = [];
 
   switch (filter) {
-    case 'ALL':
+    case Constants.FILTER_ALL:
       filteredPuppies = puppiesArr.slice(0);
       break;
-    case 'ADOPTED':
+    case Constants.FILTER_ADOPTED:
       filteredPuppies = puppiesArr.filter(puppy => puppy.adopted);
       break;
-    case 'NOT_ADOPTED':
+    case Constants.FILTER_NOT_ADOPTED:
       filteredPuppies = puppiesArr.filter(puppy => !puppy.adopted);
       break;
     default:
