@@ -54,7 +54,7 @@ describe('Puppies async actions', () => {
   });
 
   it('Creates createPuppySuccess when creating a puppy has been completed successfully', () => {
-    fetchMock.postOnce('/puppies', {
+    fetchMock.postOnce(`${constants.BASE_API_URL}/puppies`, {
       body: {},
       headers: { 'Content-Type': 'application/json' }
     });
@@ -70,7 +70,7 @@ describe('Puppies async actions', () => {
   });
 
   it('Creates readPuppiesSuccess when reading puppies has been completed successfully', () => {
-    fetchMock.getOnce('/puppies', {
+    fetchMock.getOnce(`${constants.BASE_API_URL}/puppies`, {
       body: [],
       headers: {
         'Content-Type': 'application/json'
@@ -95,7 +95,7 @@ describe('Puppies async actions', () => {
       id: 1
     };
 
-    fetchMock.putOnce(`/puppies/${puppy.id}`, {
+    fetchMock.putOnce(`${constants.BASE_API_URL}/puppies/${puppy.id}`, {
       body: puppy,
       headers: { 'Content-Type': 'application/json' }
     });
@@ -113,7 +113,7 @@ describe('Puppies async actions', () => {
   it('Creates deletePuppySuccess when deleting a puppy has been completed successfully', () => {
     const puppyId = 1;
 
-    fetchMock.deleteOnce(`/puppies/${puppyId}`, {
+    fetchMock.deleteOnce(`${constants.BASE_API_URL}/puppies/${puppyId}`, {
       body: {},
       headers: { 'Content-Type': 'application/json' }
     });
