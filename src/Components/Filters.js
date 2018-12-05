@@ -1,23 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../Actions/Filter.actions';
 import * as constants from '../Constants/Constants';
 import PropTypes from 'prop-types';
 
-class Filters extends Component {
-  _onChangeFilterHandler = e => this.props._filterPuppies(e.target.value);
-
-  render = () => (
-    <div className="filters">
-      <span className="u-mr-half">Change filters:</span>
-      <select onChange={this._onChangeFilterHandler} value={this.props.filter}>
-        <option value={`${constants.FILTER_ALL}`}>All</option>
-        <option value={`${constants.FILTER_ADOPTED}`}>Adopted</option>
-        <option value={`${constants.FILTER_NOT_ADOPTED}`}>Not Adopted</option>
-      </select>
-    </div>
-  );
-}
+const Filters = ({ _filterPuppies, filter }) => (
+  <div className="filters">
+    <span className="u-mr-half">Change filters:</span>
+    <select onChange={e => _filterPuppies(e.target.value)} value={filter}>
+      <option value={`${constants.FILTER_ALL}`}>All</option>
+      <option value={`${constants.FILTER_ADOPTED}`}>Adopted</option>
+      <option value={`${constants.FILTER_NOT_ADOPTED}`}>Not Adopted</option>
+    </select>
+  </div>
+);
 
 Filters.propTypes = {
   filter: PropTypes.oneOf([
@@ -31,11 +27,13 @@ const mapStateToProps = state => ({
   filter: state.filter
 });
 
-const mapDispatchToProps = (dispatch, props) => ({
+const mapDispatchToProps = dispatch => ({
   _filterPuppies: filter => dispatch(actions.filterPuppies(filter))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Filters);
+export default React.memo(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Filters)
+);

@@ -1,14 +1,12 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 
-class NotFound extends PureComponent {
-  render = () => (
-    <div
-      style={{ height: '100vh' }}
-      className="page-not-found u-fx u-fx-align-center u-fx-justify-center"
-    >
-      <p>Ups! 404 Not Found.</p>
-    </div>
-  );
-}
+const NotFound = () => (
+  <div
+    style={{ height: '100vh' }}
+    className="page-not-found u-fx u-fx-align-center u-fx-justify-center"
+  >
+    <p>Ups! 404 Not Found.</p>
+  </div>
+);
 
-export default NotFound;
+export default React.memo(NotFound);
