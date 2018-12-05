@@ -1,38 +1,12 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import * as actions from '../Actions/Puppies.actions';
 import { connect } from 'react-redux';
 
-class PuppyAddForm extends Component {
-  constructor() {
-    super();
+const PuppyAddForm = ({ _createPuppy }) => {
+  const [name, setName] = useState('');
+  const [type, setType] = useState('');
 
-    this.state = {
-      name: '',
-      type: ''
-    };
-  }
-
-  _onChangeInputHandler = e => {
-    const key = e.target.name;
-    const { value } = e.target;
-
-    this.setState(() => ({ [key]: value }));
-  };
-
-  _onClickSaveHandler = () => {
-    this.props._createPuppy({
-      name: this.state.name,
-      type: this.state.type,
-      adopted: false
-    });
-
-    this.setState(prevState => ({
-      name: '',
-      type: ''
-    }));
-  };
-
-  render = () => (
+  return (
     <div className="u-mb-double u-fx u-fx-justify-center">
       <div className="puppy-add-form">
         <div className="u-fx u-fx-align-center u-mb-full">
@@ -41,8 +15,8 @@ class PuppyAddForm extends Component {
             name="name"
             className="puppy-add-form__input u-pa-half"
             type="text"
-            onChange={this._onChangeInputHandler}
-            value={this.state.name}
+            onChange={e => setName(e.target.value)}
+            value={name}
           />
         </div>
         <div className="u-fx u-fx-align-center  u-mb-full">
@@ -51,26 +25,33 @@ class PuppyAddForm extends Component {
             name="type"
             className="puppy-add-form__input u-pa-half"
             type="text"
-            onChange={this._onChangeInputHandler}
-            value={this.state.type}
+            onChange={e => setType(e.target.value)}
+            value={type}
           />
         </div>
         <button
           className="puppy-save-btn u-pa-half"
-          onClick={this._onClickSaveHandler}
+          onClick={() => {
+            _createPuppy({ name, type, adopted: false });
+
+            setName('');
+            setType('');
+          }}
         >
           Save puppy
         </button>
       </div>
     </div>
   );
-}
+};
 
-const mapDispatchToProps = (dispatch, props) => ({
+const mapDispatchToProps = dispatch => ({
   _createPuppy: puppy => dispatch(actions.createPuppy(puppy))
 });
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(PuppyAddForm);
+export default React.memo(
+  connect(
+    null,
+    mapDispatchToProps
+  )(PuppyAddForm)
+);
