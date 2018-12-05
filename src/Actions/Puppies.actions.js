@@ -1,3 +1,4 @@
+import * as constants from '../Constants/Constants';
 import * as types from '../Types/Puppies.types';
 import { genericActionError } from './Generic.actions';
 
@@ -8,7 +9,7 @@ export const createPuppySuccess = puppy => ({
 
 export const createPuppy = puppy => async dispatch => {
   try {
-    const res = await fetch(`/puppies`, {
+    const res = await fetch(`${constants.BASE_API_URL}/puppies`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -30,7 +31,7 @@ export const readPuppiesSuccess = puppies => ({
 
 export const readPuppies = () => async dispatch => {
   try {
-    const res = await fetch(`/puppies`);
+    const res = await fetch(`${constants.BASE_API_URL}/puppies`);
     const puppies = await res.json();
     dispatch(readPuppiesSuccess(puppies));
   } catch (err) {
@@ -45,7 +46,7 @@ export const updatePuppySuccess = puppy => ({
 
 export const updatePuppy = puppy => async dispatch => {
   try {
-    const res = await fetch(`/puppies/${puppy.id}`, {
+    const res = await fetch(`${constants.BASE_API_URL}/puppies/${puppy.id}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/json',
@@ -67,7 +68,9 @@ export const deletePuppySuccess = puppyId => ({
 
 export const deletePuppy = puppyId => async dispatch => {
   try {
-    await fetch(`/puppies/${puppyId}`, { method: 'DELETE' });
+    await fetch(`${constants.BASE_API_URL}/puppies/${puppyId}`, {
+      method: 'DELETE'
+    });
     dispatch(deletePuppySuccess(puppyId));
   } catch (err) {
     dispatch(genericActionError(err));
