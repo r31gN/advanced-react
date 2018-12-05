@@ -7,8 +7,6 @@ import './Css/index.css';
 import App from './Components/App';
 import About from './Components/About';
 import NotFound from './Components/NotFound';
-import { registerObserver } from 'react-perf-devtool';
-registerObserver();
 
 ReactDOM.render(
   <Provider store={store}>
