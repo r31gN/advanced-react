@@ -7,7 +7,7 @@ import Puppy from './Puppy';
 const PuppiesList = ({ _readPuppies, puppies, filter }) => {
   useEffect(() => {
     _readPuppies();
-  }, []);
+  }, [_readPuppies]);
 
   if (!puppies.length) {
     return null;
