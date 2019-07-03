@@ -134,7 +134,7 @@ describe('Puppies reducer tests', () => {
     expect(reducer(undefined, {})).toEqual([]);
   });
 
-  it('Should handle changing state when new puppies come are read', () => {
+  it('Should handle changing state when new puppies are read', () => {
     const puppies = [{ name: 'Reign', type: 'Beast', adopted: false }];
 
     expect(
