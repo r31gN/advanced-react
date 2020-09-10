@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "fetch-mock": "^9.3.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "prop-types": "^15.7.2",
     "redux-mock-store": "^1.5.4"
   },
